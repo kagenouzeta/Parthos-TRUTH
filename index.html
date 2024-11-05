@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yes or No Game</title>
+    <style>
+        /* Styling for body background */
+        body {
+            background-image: url('background.jpg'); /* Background image */
+            background-size: cover; /* Cover the entire screen */
+            background-position: center; /* Center the image */
+            background-repeat: no-repeat; /* Do not repeat the image */
+            background-color: rgba(240, 248, 255, 0.8); /* Light blue fallback color with transparency */
+            font-family: Arial, sans-serif; /* Font for the page */
+            margin: 0; /* Remove default margin */
+            height: 100vh; /* Full height for the body */
+            display: flex; /* Use flexbox for centering */
+            flex-direction: column; /* Arrange items vertically */
+            justify-content: center; /* Center items vertically */
+            align-items: center; /* Center items horizontally */
+            position: relative; /* Position relative for absolute positioning of buttons */
+        }
+
+        /* Styling for buttons */
+        .button {
+            padding: 10px 20px;
+            font-size: 1.5vw; /* Responsive font size */
+            cursor: pointer;
+            margin: 10px;
+            border: none; /* Remove border */
+            border-radius: 5px; /* Rounded corners */
+            background-color: rgba(255, 255, 255, 0.8); /* Light background for buttons */
+            transition: background-color 0.3s; /* Transition effect */
+        }
+
+        .button:hover {
+            background-color: rgba(255, 255, 255, 1); /* Change color on hover */
+        }
+
+        #noButton {
+            position: absolute;
+        }
+
+        /* Pop-up styling */
+        #popup {
+            display: none; /* Hide initially */
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white; /* White background for the pop-up */
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            border-radius: 10px;
+            text-align: center;
+            z-index: 10;
+            width: 80vw; /* Responsive width */
+            max-width: 400px; /* Max width for larger screens */
+        }
+
+        /* Dark overlay behind the pop-up */
+        #overlay {
+            display: none; /* Hide initially */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+        }
+
+        /* Styling for the image in the pop-up */
+        #popup img {
+            width: 100%; /* Full width of the pop-up */
+            height: auto; /* Maintain aspect ratio */
+            max-height: 200px; /* Limit the height if needed */
+            border-radius: 10px; /* Rounded corners for the image */
+            object-fit: contain; /* Maintain aspect ratio without stretching */
+        }
+
+        /* Ensure the text is visible */
+        #popup h2, #popup p {
+            margin: 10px 0; /* Spacing above and below the text */
+        }
+
+        /* Responsive styling for smaller screens */
+        @media (max-width: 600px) {
+            .button {
+                font-size: 4vw; /* Larger font size for smaller screens */
+            }
+        }
+
+        /* Watermark styling */
+        .watermark {
+            position: fixed; /* Fixed position */
+            bottom: 10px; /* 10 pixels from the bottom */
+            right: 10px; /* 10 pixels from the right */
+            font-size: 1.2vw; /* Responsive font size */
+            color: rgba(255, 255, 255, 0.7); /* Light color with transparency */
+            font-family: Arial, sans-serif; /* Font style */
+            z-index: 20; /* Higher z-index to be above other elements */
+        }
+    </style>
+</head>
+<body>
+    <h1 style="color: white;">Is Partho gay?</h1>
+    <div>
+        <button class="button" onclick="showPopup()">Yes</button>
+        <button class="button" id="noButton" onmouseover="moveNoButton()">No</button>
+    </div>
+
+    <div id="overlay" onclick="closePopup()"></div> <!-- Dark background overlay -->
+    
+    <div id="popup" aria-labelledby="popupTitle" role="dialog">
+        <h2 id="popupTitle">YES BABY, HE IS GAY!</h2>
+        <img src="partho.jpg" alt="Image of Partho"> <!-- Use your local image file here -->
+        <p>YES BABY, HE IS GAY!</p> <!-- Text that should be displayed -->
+        <button class="button" onclick="closePopup()">Close</button>
+    </div>
+
+    <!-- Audio element -->
+    <audio id="yesSound" src="fart.mp3" preload="auto"></audio> <!-- Ensure sound file is correctly linked -->
+
+    <div class="watermark">Made by Derek</div> <!-- Watermark text -->
+
+    <script>
+        // Function to show the pop-up and play sound
+        function showPopup() {
+            document.getElementById("popup").style.display = "block";
+            document.getElementById("overlay").style.display = "block";
+            const sound = document.getElementById("yesSound");
+
+            // Check if the audio can be played
+            sound.currentTime = 0; // Reset audio to start
+            sound.play().catch((error) => {
+                console.error("Error playing sound:", error);
+            }); // Play sound when pop-up is shown
+        }
+
+        // Function to close the pop-up
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        // Function to move the "No" button randomly
+        function moveNoButton() {
+            const noButton = document.getElementById("noButton");
+            const maxX = window.innerWidth - noButton.offsetWidth;
+            const maxY = window.innerHeight - noButton.offsetHeight;
+
+            // Generate random positions within the screen boundaries
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            noButton.style.left = `${randomX}px`;
+            noButton.style.top = `${randomY}px`;
+        }
+    </script>
+</body>
+</html>
+
